@@ -48,11 +48,9 @@ class DecayLC(Model):
     def assign_val(self,name,val):
         setattr(self.polymodel,name,val)
     
-    #def lin_func(self,nu):        
-    #    return -np.log10(self.eta) +(np.log10(self.R0)/self.tau)*(nu-self.eta)
-    
     def lin_func(self,nu):
         return self.F0*np.exp(-(nu-self.t_0)/self.tau_d)
+
 
 def do_decay_fit(lc,name='',minimizer='minuit',t_start_frac=0.8, t_stop_frac=0.5,show_report=True):
     
@@ -120,18 +118,11 @@ class RespConvolveLC(Model):
         self.nu_min=-100
         self.nu_max=100
         self.parameters = ModelParameterArray()      
-        #self.F0=1
         self.parameters.add_par(AnalyticalParameter(self,name='delta_T',par_type='',val=1,val_min=0,val_max=None,units='d'))        
-        #self.tau_d=1
         self.parameters.add_par(AnalyticalParameter(self,name='t_decay',par_type='',val=1,val_min=0.,val_max=None,units='d'))
-        #self.tau_r=1
         self.parameters.add_par(AnalyticalParameter(self,name='phi',par_type='',val=1,val_min=0.,val_max=None,units=''))
-        #self.t_0=1
-
         self.parameters.add_par(AnalyticalParameter(self,name='t_rise',par_type='',val=1,val_min=0.,val_max=None,units='d'))
-
         self.parameters.add_par(AnalyticalParameter(self,name='psi',par_type='',val=1,val_min=0.,val_max=None,units=''))
-
         self.parameters.add_par(AnalyticalParameter(self,name='A',par_type='',val=1,val_min=0,val_max=None,units=''))
         
         self.lc_in=None
@@ -163,13 +154,7 @@ class RespConvolveLC(Model):
 
 
 def merge_lc(lc_falre,lc_exp):
-    #with open(lc_falre, 'rb') as f:
-    #    lcs_flare=pickle.load(f)
-    #    lc_1_flare=lcs_flare[band]
-
-    #with open(lc_exp,'rb') as f:
-    #    lcs=pickle.load(f)
-    #    lc_1_exp=lcs[band]
+    
     lc_falre=copy.deepcopy(lc_falre)
     lc_exp=copy.deepcopy(lc_exp)
     delta_t=lc_falre['time'][1]-lc_falre['time'][0]
@@ -203,11 +188,6 @@ def gamma_radio_delay_fit(infile,lc_name_1,lc_name_2,t_start_frac=0.8, t_stop_fr
             lc_1_flare=lcs_flare[lc_name_1]
             lc_2_flare=lcs_flare[lc_name_2]
 
-        #lc_1['time']=lc_1['time']+lc_1_flare['time'][-1]
-        #lc_2['time']=lc_2['time']+lc_2_flare['time'][-1]
-
-        #lc_1=vstack([lc_1_flare,lc_1])
-        #lc_2=vstack([lc_2_flare,lc_2])
     
         lc_1=merge_lc(lc_1_flare,lc_1)
         lc_2=merge_lc(lc_2_flare,lc_2)
@@ -229,11 +209,9 @@ def gamma_radio_delay_fit(infile,lc_name_1,lc_name_2,t_start_frac=0.8, t_stop_fr
     print('Fm_r/Fm_g',A)
     f_res=RespConvolveLC()
     f_res.parameters.phi.val=1
-    #f_res.parameters.phi.fit_range=[2,3]
     f_res.parameters.phi.frozen=phi_frozen
 
     f_res.parameters.psi.val=1
-    #f_res.parameters.psi.fit_range=[2,3]
     f_res.parameters.psi.frozen=psi_frozen    
 
     f_res.parameters.delta_T.val=delta_t
@@ -292,13 +270,10 @@ def gamma_radio_delay_fit(infile,lc_name_1,lc_name_2,t_start_frac=0.8, t_stop_fr
     
     bfm,mm=fit_XY(fm,data,x_fit_start=x_fit_start,x_fit_stop=x_fit_stop,minimizer='minuit',silent=False)
 
-    #lc_2_conv=convolve_lc(lc_1,delta_t,t_decay,phi,1)
     fig=plt.figure(dpi=120)
 
     t=lc_2['time']
-    #t=t[t>0]
-    #t=t[t<600]
-    #plt.plot(lc_2_conv['time'].to('d'),lc_2_conv['flux']/lc_2_conv['flux'].max(),label='c(gamma,S(t))')
+
     plt.plot(t,bfm.fit_model.eval(nu=t,get_model=True),label='$l_R(t)=S(t)*l_{\gamma}(t)$')
     t=t[t>x_fit_start]
     t=t[t<x_fit_stop]
@@ -311,7 +286,6 @@ def gamma_radio_delay_fit(infile,lc_name_1,lc_name_2,t_start_frac=0.8, t_stop_fr
     plt.ylabel('F/Fmax ')
     plt.legend(loc='best')
     plt.title('$\phi=%2.1f, \Delta_t=%2.1f, t_{decay}=%2.1f$'%(f_res.parameters.phi.val,f_res.parameters.delta_T.val,f_res.parameters.t_decay.val))
-    #plt.xlim(0,1250)
     plt.show()
 
     tm1= (f_res.parameters.t_decay.val+f_res.parameters.t_rise.val)/(f_res.parameters.t_decay.val-f_res.parameters.t_rise.val)
@@ -339,7 +313,6 @@ def gamma_radio_delay_fit(infile,lc_name_1,lc_name_2,t_start_frac=0.8, t_stop_fr
 
 def func_t_dec(x, R0):
     return  R0/(x*3E10)
-    #return ((R0+x*3E10)*np.power(x*3E10,a))
 
 def func_t_rise(x,Rtr):
     return Rtr/(x*3E10)
@@ -369,26 +342,10 @@ class ExpDeltaT_vexp(Model):
         self.parameters.add_par(AnalyticalParameter(self,name='nu_0',par_type='',val=1E10,val_min=1E9,val_max=1E12,units='Hz'))
         self.parameters.add_par(AnalyticalParameter(self,name='nu_1',par_type='',val=1E10,val_min=1E6,val_max=1E15,units='Hz'))
         self.parameters.add_par(AnalyticalParameter(self,name='phi',par_type='',val=0.5,val_min=-2,val_max=2,units=''))
-        #self.parameters.add_par(AnalyticalParameter(self,name='m_B',par_type='',val=1.0,val_min=0.5,val_max=2.5,units=''))
-    
-    #def set(self,**keywords):
-    #    #super(GrowthMode,self).set(**keywords )
-
-    #    """
-    #    sets a parameter value checking for physical boundaries 
-    #    """
-    #    if 'val' in keywords.keys():
-    #        self.assign_val(self.name,keywords['val']) 
-
-    #def assign_val(self,name,val):
-    #    setattr(self.polymodel,name,val)
-    
-    #def lin_func(self,nu):        
-    #    return -np.log10(self.eta) +(np.log10(self.R0)/self.tau)*(nu-self.eta)
+        
     
     def lin_func(self,nu):
         a=(1)*(self.parameters.R0.val/(3E10*nu))       
-        #phi=(self.parameters.p.val+4)/(2*self.parameters.m_B.val*(self.parameters.p.val+2)+4)       
         phi=self.parameters.phi.val
         a=a*((self.parameters.nu_0.val/self.parameters.nu_1.val)**(phi)-1)
         a[a<=0]=0
@@ -412,16 +369,12 @@ class ExpTrise(Model):
         self.parameters.add_par(AnalyticalParameter(self,name='nu_0',par_type='',val=1E10,val_min=1E9,val_max=1E12,units='Hz'))
         self.parameters.add_par(AnalyticalParameter(self,name='nu_1',par_type='',val=1E10,val_min=1E6,val_max=1E15,units='Hz'))
         self.parameters.add_par(AnalyticalParameter(self,name='phi',par_type='',val=0.5,val_min=0,val_max=1,units=''))
-        #self.parameters.add_par(AnalyticalParameter(self,name='m_B',par_type='',val=1.0,val_min=0.5,val_max=2.5,units=''))
     
     def lin_func(self,nu):
         a=(1/3)*(self.parameters.R0.val/(3E10*nu))
-        #phi=(self.parameters.p.val+4)/(2*self.parameters.m_B.val*(self.parameters.p.val+2)+4)       
         phi=self.parameters.phi.val
         a=a*((self.parameters.nu_0.val/self.parameters.nu_1.val)**(phi)-1)
 
-        #d=1/((1+np.exp(c)*2*self.parameters.m_B.val))
-        #return (self.parameters.R_tr.val)/(2*self.parameters.m_B.val*3E10*nu))*(self.parameters.nu_0.val/self.parameters.nu_1.val)**self.parameters.phi.val*(1+(nu-1)/(2*self.parameters.m_B.val))
         a[a<=0]=0
         return a
 
@@ -453,7 +406,6 @@ class ExpTdec_vexp(Model):
        
         a=(self.parameters.R0.val/(3E10*nu))
         a=a/(2*self.parameters.m_B.val)
-        #phi=(self.parameters.p.val+4)/(2*self.parameters.m_B.val*(self.parameters.p.val+2)+4)       
         phi=self.parameters.phi.val
         a=a*(self.parameters.nu_0.val/self.parameters.nu_1.val)**(phi)
         return a
@@ -479,22 +431,12 @@ class ExpTdec_vexp_beta_S(Model):
         self.parameters.add_par(AnalyticalParameter(self,name='nu_0',par_type='',val=1E10,val_min=1E9,val_max=1E12,units='Hz'))
         self.parameters.add_par(AnalyticalParameter(self,name='nu_1',par_type='',val=1E10,val_min=1E6,val_max=1E15,units='Hz'))
         self.parameters.add_par(AnalyticalParameter(self,name='phi',par_type='',val=0.5,val_min=0.0,val_max=1.9,units=''))
-        #self.parameters.add_par(AnalyticalParameter(self,name='index',par_type='',val=0.5,val_min=0.0,val_max=1,units=''))
 
         self.parameters.add_par(AnalyticalParameter(self,name='beta_S',par_type='',val=0.01,val_min=0.001,val_max=0.1,units=''))
         
    
     def lin_func(self,nu):
         
-        #a=np.zeros(nu.shape)
-        #m=nu<self.parameters.beta_S.val
-        #phi=self.parameters.phi.val
-        #c=(self.parameters.R0.val/3E10)**(self.parameters.nu_0.val/self.parameters.nu_1.val)**(phi)
-        #c=c/(2*self.parameters.m_B.val)
-        #a[m]=np.power(nu[m], -self.parameters.index.val)
-        #a[~m]=np.power(self.parameters.beta_S.val, -(self.parameters.index.val-1))*np.power(nu[~m], -1)
-        #return a*c
-       
         a=(self.parameters.R0.val/(3E10*nu))
         a=a/(2*self.parameters.m_B.val)
         phi=self.parameters.phi.val
@@ -581,19 +523,16 @@ def gamma_radio_delay_analysis_vs_v_exp(beta_exp,
 
     bfm,mm=fit_XY(fm,data,x_fit_start=beta_min,x_fit_stop=beta_exp.max(),minimizer='minuit',silent=True)
     mm.show_report()
-    #e=bfm.minimizer.minuit_fun.minos()
-    #print(e)
+    
     R0_fit=fm.components.ExpTdec_vexp.parameters.R0.val
     
     print('R_0 %e'%R0_cm)
-    #print('R_0_fit %e'%R_0_fit)
-    #print('R_0_fit*delta %e'%(R_0_fit*delta))
-    
+   
     print('R0_fit %e'%R0_fit)
     print('R0_fit*delta %e'%(R0_fit*delta))
     p=eval_p(fm.components.ExpTdec_vexp.parameters.phi.val,m_B=fm.components.ExpTdec_vexp.parameters.m_B.val)
     print('p fit  %e'%(p))
-    #print('nu_0%e GHz'%(fm.components.ExpTdec_vexp.parameters.nu_0.val/1E9))
+
     f_tdec=plt.figure(dpi=100)
     y_d=fm.eval(nu=x,get_model=True)/86400 
     plt.errorbar( beta_exp , t_decay_days ,yerr=t_decay_days_err, ls='', marker='o')
@@ -619,21 +558,18 @@ def gamma_radio_delay_analysis_vs_v_exp(beta_exp,
 
     bfm,mm=fit_XY(fm,data,x_fit_start=beta_min,x_fit_stop=beta_exp.max(),minimizer='minuit',silent=True)
     mm.show_report()
-    #e=bfm.minimizer.minuit_fun.minos()
-    #print(e)
+    
     R0_fit=fm.components.ExpTdec_vexp_beta_S.parameters.R0.val
    
     print('R_0 %e'%R0_cm)
-    #print('R_0_fit %e'%R_0_fit)
-    #print('R_0_fit*delta %e'%(R_0_fit*delta))
-    
+   
     print('R0_fit %e'%R0_fit)
     print('R0_fit*delta %e'%(R0_fit*delta))
     p=eval_p(fm.components.ExpTdec_vexp_beta_S.parameters.phi.val,m_B=fm.components.ExpTdec_vexp_beta_S.parameters.m_B.val)
     print('p fit  %e'%(p))
-    #print('nu_0%e GHz'%(fm.components.ExpTdec_vexp.parameters.nu_0.val/1E9))
+
     y_d=fm.eval(nu=x,get_model=True)/86400 
-    #plt.rc('text', usetex=True)
+
     plt.plot( x , y_d ,'--',label=r' $t^{obs}_{decay^{*}}$ (Eq. 23) best fit')
     plt.xscale("log")
     plt.yscale("log")
@@ -652,8 +588,7 @@ def gamma_radio_delay_analysis_vs_v_exp(beta_exp,
     fm=FitModel(analytical=fit_func,name='test')
     fm.nu_min_fit=beta_exp.min()
     fm.nu_max_fit=beta_exp.max()
-    #fm.components.DeltaT.parameters.R0.val=R0_cm/delta
-    #fm.components.DeltaT.parameters.R0.fit_range=[R0_cm/100,R0_cm*100]
+    
 
     R_tr_input=(R0_cm)/delta
     fm.components.DeltaT.parameters.R0.val=R_tr_input
@@ -664,17 +599,13 @@ def gamma_radio_delay_analysis_vs_v_exp(beta_exp,
 
     fm.components.DeltaT.parameters.nu_1.val=1.5E10
     fm.components.DeltaT.parameters.nu_1.frozen=True
-    #fm.components.ExpTdec_vexp.parameters.phi.val=0.1
-    #fm.components.ExpTdec_vexp.parameters.phi.frozen=1
+   
     fm.components.DeltaT.parameters.nu_0.val=nu0
     fm.components.DeltaT.parameters.nu_0.fit_range=[1E9,1E12]
-    #fm.components.DeltaT.parameters.m_B.val=1
-    # fm.components.DeltaT.parameters.m_B.fit_range=[.9,2.1]
-
+    
     bfm,mm=fit_XY(fm,data,x_fit_start=beta_min,x_fit_stop=beta_exp.max(),minimizer='minuit',silent=True)
     mm.show_report()
-    #e=bfm.minimizer.minuit_fun.minos()
-    #print(e)
+    
     R0=fm.components.DeltaT.parameters.R0.val
     t_exp=fm.components.DeltaT.parameters.t_exp.val
     print('R_0 %e'%R0_cm)
@@ -705,54 +636,18 @@ def gamma_radio_delay_analysis_vs_v_exp(beta_exp,
     print('------')
     
     
-    #f_sp=plt.figure(dpi=100)
-    #gs = f_sp.add_gridspec(2, hspace=0)
-    #(ax1, ax2) = gs.subplots(sharex=True)
-    ##f_sp, (ax1, ax2) = plt.subplots(2, sharex=True,dpi=100)
-
-    #ax1.loglog(t_decay_days,t_rise_days,'o',label=r'$t_{rise}^{obs}$')
-    #ax1.loglog(t_decay_days,delta_T_days-fm.components.DeltaT.parameters.t_exp.val/86400,'o',label=r'$\Delta_t^{obs}-t_{exp}^{obs}$')
-
-    ##plt.loglog(t_rise_days,t_decay_days,'o')
-
-    #ax1.set_ylabel('(d)')       
    
-    #ax1.legend()
-    #ax2.semilogx(t_decay_days,(delta_T_days-fm.components.DeltaT.parameters.t_exp.val/86400)/t_rise_days,'o',label=r'$(\Delta_t^{obs}-t_{exp}^{obs})/t_{rise}^{obs}$')
-    #ax2.axhline(3,label=r'$t_{peak}^{obs}/t_{rise}^{rise}=3$',ls='--',lw='1')
-
-
-    #ax2.set_xlabel(r'$t^{obs}_{decay}$  (d)')
-    #ax2.set_ylabel('(d)')   
-    #ax2.legend()
-    #f_sp.tight_layout()
-
     f_sp=plt.figure(dpi=100)
-    #gs = f_sp.add_gridspec(1,1, hspace=0)
-    #(ax1) = gs.subplots(sharex=False)
-    #f_sp, (ax1, ax2) = plt.subplots(2, sharex=True,dpi=100)
-    ax1=f_sp.add_subplot()
-    #ax1.loglog(t_decay_days,t_rise_days,'o',label=r'$t_{rise}^{obs}$')
-    #ax1.loglog(t_decay_days,delta_T_days-fm.components.DeltaT.parameters.t_exp.val/86400,'o',label=r'$\Delta_t^{obs}-t_{exp}^{obs}$')
-    #ax1.loglog(t_decay_days,delta_T_days,'o')
-    #plt.loglog(t_rise_days,t_decay_days,'o')
-
-    #ax1.set_ylabel(r'$\Delta_t^{obs}$ (d)')       
-    #ax1.set_xlabel(r'$t^{obs}_{decay}$ (d)')   
-    #ax1.legend()
     
-    #ax2.loglog(freq_radio,t_rise_days/t_decay_days,'o')
-    #ax2.semilogx(t_decay_days,(delta_T_days-fm.components.DeltaT.parameters.t_exp.val/86400)/t_rise_days,'o',label=r'$(\Delta_t^{obs}-t_{exp}^{obs})/t_{rise}^{obs}$')
-    #ax2.set_xlabel(r'$t^{obs}_{decay}$  (d)')
-    #ax2.axhline(4,label=r'$t_{peak}^{obs}/t_{rise}^{rise}=4$',ls='--',lw='1')
+    ax1=f_sp.add_subplot()
+    
     y=t_rise_days/t_decay_days
     y_err=y*np.sqrt((t_rise_days_err/t_rise_days)**2+(t_decay_days_err/t_rise_days))
-    ax1.errorbar(beta_exp,y,yerr=y_err,marker='o',ls='',label=r'$t_{decay}^{obs}/t_{rise}^{obs}$')
-    #ax1.semilogx(beta_exp,t_rise_days/t_decay_days,'o',label=r'$t_{decay}^{obs}/t_{rise}^{obs}$')
-    ax1.plot(x,y_r/y_d,'--',label=r'$t_{decay}^{obs}/t_{rise}^{obs}$ best fit model')
+    ax1.errorbar(beta_exp,y,yerr=y_err,marker='o',ls='',label=r'$t_{rise}^{obs}/t_{decay}^{obs}$')
+
+    ax1.plot(x,y_r/y_d,'--',label=r'$t_{rise}^{obs}/t_{decay^*}^{obs}$ best fit model')
     ax1.set_xscale('log')
-    #ax1.axvline( 180*1E9,ls='--',label=r'$ \nu^{0, \rm obs}_{SSA} ~sym. $',c='red')
-    ax1.set_ylabel('(d)')       
+    ax1.set_ylabel(r'$t_{rise}^{obs}/t_{decay}^{obs}$')   
     ax1.set_xlabel(r' $\beta_{exp}$ (v/c)')  
     ax1.legend()
     f_sp.tight_layout()
@@ -885,8 +780,7 @@ def gamma_radio_delay_analysis_vs_freq(freq_radio,
    
     x=np.linspace(freq_radio.min()*0.9,freq_radio.max()*5,100)
     nu0=1E11
-    #m_B_range=[0.9,2.1]
-    #beta_range=[beta_exp*0.8, beta_exp*2]
+
     beta_range=[0,0.3]
     fit_range=[1E10,1E11]
     fit_func=ExpTrise_nu()
@@ -902,10 +796,7 @@ def gamma_radio_delay_analysis_vs_freq(freq_radio,
     fm.components.ExpTrise.parameters.beta_exp.frozen=False
     fm.components.ExpTrise.parameters.nu_0.val=nu0
     fm.components.ExpTrise.parameters.nu_0.fit_range=fit_range
-    #fm.components.ExpTrise.parameters.phi.val=0.9
-    #fm.components.ExpTrise.parameters.phi.fit_range=[0.7,1]   
-    #fm.components.ExpTrise.parameters.m_B.fit_range=m_B_range
-
+    
     bfm,mm=fit_XY(fm,data,x_fit_start=freq_radio.min(),x_fit_stop=freq_radio.max(),minimizer='minuit',silent=True)
     mm.show_report()
     
@@ -924,8 +815,7 @@ def gamma_radio_delay_analysis_vs_freq(freq_radio,
     plt.ylabel(' $t_{rise}^{obs}$  (d)')
     plt.legend()
     R0_t_rise=fm.components.ExpTrise.parameters.R0 .val
-    #nu_0_trise=fm.components.ExpTrise.parameters.nu_0.val
-    #p_t_rise=fm.components.ExpTrise.parameters.p.val
+  
     print('R_0  %e'%R0_cm)
     print('R0 fit %e'%(R0_t_rise))
     print('R0 fit *delta %e'%(R0_t_rise*delta))
@@ -950,7 +840,6 @@ def gamma_radio_delay_analysis_vs_freq(freq_radio,
     fm.components.ExpTdec.parameters.beta_exp.frozen=False
     fm.components.ExpTdec.parameters.nu_0.val=nu0
     fm.components.ExpTdec.parameters.nu_0.fit_range=fit_range
-    #fm.components.ExpTdec.parameters.m_B.fit_range=m_B_range
 
     bfm,mm=fit_XY(fm,data,x_fit_start=freq_radio.min(),x_fit_stop=freq_radio.max(),minimizer='minuit',silent=True)
     mm.show_report()
@@ -994,7 +883,6 @@ def gamma_radio_delay_analysis_vs_freq(freq_radio,
     fm.components.DeltaT.parameters.beta_exp.val=beta_exp
     fm.components.DeltaT.parameters.beta_exp.fit_range=beta_range
     fm.components.DeltaT.parameters.beta_exp.frozen=False
-    #fm.components.DeltaT.parameters.m_B.fit_range=m_B_range
    
     fm.components.DeltaT.parameters.nu_0.fit_range=fit_range
 
@@ -1033,33 +921,18 @@ def gamma_radio_delay_analysis_vs_freq(freq_radio,
    
     
     f_sp=plt.figure(dpi=100)
-    #gs = f_sp.add_gridspec(1,1, hspace=0)
-    #(ax1) = gs.subplots(sharex=False)
-    #f_sp, (ax1, ax2) = plt.subplots(2, sharex=True,dpi=100)
+   
     ax1=f_sp.add_subplot()
-    #ax1.loglog(t_decay_days,t_rise_days,'o',label=r'$t_{rise}^{obs}$')
-    #ax1.loglog(t_decay_days,delta_T_days-fm.components.DeltaT.parameters.t_exp.val/86400,'o',label=r'$\Delta_t^{obs}-t_{exp}^{obs}$')
-    #ax1.loglog(t_decay_days,delta_T_days,'o')
-    #plt.loglog(t_rise_days,t_decay_days,'o')
-
-    #ax1.set_ylabel(r'$\Delta_t^{obs}$ (d)')       
-    #ax1.set_xlabel(r'$t^{obs}_{decay}$ (d)')   
-    #ax1.legend()
-    
-    #ax2.loglog(freq_radio,t_rise_days/t_decay_days,'o')
-    #ax2.semilogx(t_decay_days,(delta_T_days-fm.components.DeltaT.parameters.t_exp.val/86400)/t_rise_days,'o',label=r'$(\Delta_t^{obs}-t_{exp}^{obs})/t_{rise}^{obs}$')
-    #ax2.set_xlabel(r'$t^{obs}_{decay}$  (d)')
-    #ax2.axhline(4,label=r'$t_{peak}^{obs}/t_{rise}^{rise}=4$',ls='--',lw='1')
-
+   
     y=t_rise_days/t_decay_days
     y_err=y*np.sqrt((t_rise_days_err/t_rise_days)**2+(t_decay_days_err/t_rise_days))
-    ax1.errorbar(freq_radio,y,yerr=y_err,marker='o',ls='',label=r'$t_{decay}^{obs}/t_{rise}^{obs}$')
-    #ax1.semilogx(freq_radio,t_rise_days/t_decay_days,'o',label=r'$t_{decay}^{obs}/t_{rise}^{obs}$ data')
-    ax1.plot(x,y_r/y_d,'--',label=r'$t_{decay}^{obs}/t_{rise}^{obs}$ model')
+    ax1.errorbar(freq_radio,y,yerr=y_err,marker='o',ls='',label=r'$t_{rise}^{obs}/t_{decay}^{obs}$')
+
+    ax1.plot(x,y_r/y_d,'--',label=r'$t_{rise}^{obs}/t_{decay}^{obs}$ model')
     ax1.axvline( nu_0_bf,ls='--',label=r'$\nu^{0, \rm obs}_{SSA}$  best fit  model',c='g')
     ax1.set_xscale('log')
-    #ax1.axvline( 180*1E9,ls='--',label=r'$ \nu^{0, \rm obs}_{SSA} ~sym. $',c='red')
-    ax1.set_ylabel('(d)')       
+
+    ax1.set_ylabel(r'$t_{rise}^{obs}/t_{decay}^{obs}$')       
     ax1.set_xlabel(r' $\nu_{obs}$ (Hz)')  
     ax1.legend()
     f_sp.tight_layout()

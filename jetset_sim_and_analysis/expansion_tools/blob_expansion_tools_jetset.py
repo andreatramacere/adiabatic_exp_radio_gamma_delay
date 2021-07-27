@@ -72,9 +72,6 @@ def build_Temp_EV(duration,T_SIZE,flare_duration,delta_T,Delta_R_acc_ratio=None,
     temp_ev_acc=JetTimeEvol(jet_rad=jet,Q_inj=q_inj,inplace=True)
     temp_ev_acc.rad_region.jet.nu_min=1E8
     temp_ev_acc.acc_region.jet.nu_min=1E8
-    #duration=5E7
-    #duration_inj=duration*flare_frac
-    #duration_acc=duration*flare_frac
     T_SIZE=np.int(T_SIZE)
     
     if Delta_R_acc_ratio is not None:
@@ -275,8 +272,6 @@ def run_adiabatic_exp(sed_data,
     temp_ev_expansion.region_expansion=expansion
 
     temp_ev_expansion.init_TempEv()
-    #p=temp_ev_expansion.plot_pre_run_plot()
-    #p.rescale(y_min=1E2,y_max=1E9)
     if run is False:
         temp_ev_expansion = JetTimeEvol.load_model('%s/temp_ev_expansion_beta_exp=%3.3f.pkl'%(root_dir,beta_exp))
 
