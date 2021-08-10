@@ -29,7 +29,7 @@ OR
 The directory `expansion_tools` hosts some helper modules (no need to install), you just need to have this directory in the same directory where you run the notebooks
 
 All the  notebooks with simulations, display the results of the simulations, but you have to rerun  these notebook, to be able to perform the analysis in the other notebooks.
-To rerun the simulations (hosted in the notebooks with the `*_sim*` string, i.e. the one in items 1,2,3), yuo have to set `run=True` in cells of the notebook where this variable is defined. You will find a corresponding description in each cell of  the simulation notebooks. Please, notice that products generated in 1 (`Flare_sim.ipynb`) are necessary to run 2  (`Expansion_sim_exp_vs_no_exp.ipynb`)  and 3(`Expansion_sim_exp_vs_no_exp.ipynb`).
+To rerun the simulations (hosted in the notebooks with the `*_sim*` string, i.e. the one in items 1,2, and 3), yuo have to set `run=True` in cells of the notebook where this variable is defined. You will find a corresponding description in each cell of  the simulation notebooks. Please, notice that products generated in 1 (`Flare_sim.ipynb`) are necessary to run 2  (`Expansion_sim_exp_vs_no_exp.ipynb`)  and 3(`Expansion_sim_exp_vs_no_exp.ipynb`).
 
 List of the notebooks, and description:
 
