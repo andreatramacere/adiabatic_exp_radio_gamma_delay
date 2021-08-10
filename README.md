@@ -51,4 +51,12 @@ the long-term adiabatic expansions used in Section 5
 
 
 
-## Instructions to run the notebook in the `obs_data_analysis`
+## Instructions to run the notebook in the `radio_gev_data_and_analysis`
+
+The directory `radio_gev_data_and_analysis` hosts notebooks to analyse data (available in the `radio_gev_data_and_analysis/data` directory). If you want to rerun the analysis to obtain all the values from the manuscript, just "Run All" cells of the provided notebooks. Generated plots are put into `radio_gev_data_and_analysis/images` folder.
+
+List of the notebooks, and description:
+
+1) `processing_3c273.ipynb` This notebook is used to analyze 3C 273 data. Figure 12 of Section 6.4 is generated using this notebook.  
+2) `processing_mrk421.ipynb` This notebook is used to analyze Mrk 421 data. Figure 10 of Section 6.2 is generated using this notebook. 
+3) `processing_mrk501.ipynb` This notebook is used to analyze Mrk 501 data. Figure 11 of Section 6.3 is generated using this notebook.
