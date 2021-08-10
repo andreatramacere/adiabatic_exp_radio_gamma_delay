@@ -14,7 +14,7 @@ https://github.com/andreatramacere/jetset/releases/tag/1.2.0rc8
 Since this is a prerelease, it is not published yet on conda and pip,
 to install this version, yuo can use one of the methods described below:
 
-- use the install script in : `https://github.com/andreatramacere/jetset-installer`
+- use the install script in : https://github.com/andreatramacere/jetset-installer
 
 OR
 
