@@ -117,24 +117,6 @@ glc['f'].unit = u.ph / u.cm ** 2 / u.s
 glc['df'].unit = u.ph / u.cm ** 2 / u.s
 glc['UL95'].unit = u.ph / u.cm ** 2 / u.s
 gev_3c273 = glc
-
-
-filename = "./data/3c273/fermi/3c273_7day_gal-exgal-fixed-and-sources-fixed.csv"
-glc7 = ascii.read(filename, format='csv', names=['tc', 'f', 'df', 'TS', 'UL95'])
-glc7.meta = {
-                'source' : '3C 273',
-                'title' : 'Fermi (0.1-300$\,$GeV)',
-                'f_units' : 'ph/cm$^2$/s',
-                'freq' : np.array([100*1000, 300*1.0E6])*2.418E17 * u.Hz,
-                'binsize' : 3 * u.day,
-                'file' : filename,
-                'timerange' : [np.min(glc['tc']), np.max(glc['tc'])]
-            }
-glc7['tc'].unit = u.day
-glc7['f'].unit = u.ph / u.cm ** 2 / u.s
-glc7['df'].unit = u.ph / u.cm ** 2 / u.s
-glc7['UL95'].unit = u.ph / u.cm ** 2 / u.s
-gev_3c273_7d = glc7
 # -
 
 # ### Mrk 421
