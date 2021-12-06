@@ -54,6 +54,12 @@ List of the notebooks, and description:
 
 7) `BlobExpGeom.ipynb`  This notebook is in charge to reproduce the analysis in the Discussion section of the paper, Fig. 14
 
+## Instructions to run the notebook in the `radio_gev_data_and_analysis`
 
+The directory `radio_gev_data_and_analysis` hosts notebooks to analyse data (available in the `radio_gev_data_and_analysis/data` directory). If you want to rerun the analysis to obtain all the values from the manuscript, just "Run All" cells of the provided notebooks. Generated plots are put into `radio_gev_data_and_analysis/images` folder.
 
-## Instructions to run the notebook in the `obs_data_analysis`
+List of the notebooks, and description:
+
+1) `processing_mrk421.ipynb` This notebook is used to analyze Mrk 421 data. Figure 13 and data of Table 5 of Section 6.2 are generated using this notebook.
+2) `processing_mrk501.ipynb` This notebook is used to analyze Mrk 501 data. Figure 14 and data of Table 6 of Section 6.3 are generated using this notebook.
+3) `processing_3c273.ipynb` This notebook is used to analyze 3C 273 data. Figure 15 and data of Tables 7 and 8 of Section 6.4 are generated using this notebook.
