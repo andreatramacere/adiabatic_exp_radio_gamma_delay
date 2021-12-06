@@ -17,4 +17,6 @@ dist
 eggs
 lib
 lib64
+/extras
+jet_wd
 

@@ -8,8 +8,8 @@ in Section 6.
 
 
 ## Instructions to run the notebook in the `jetset_sim_and_analysis`
-The version of jetset is 1.2.0rc8:
-https://github.com/andreatramacere/jetset/releases/tag/1.2.0rc8
+The version of jetset is 1.2.0rc11:
+https://github.com/andreatramacere/jetset/releases/tag/1.2.0rc11
 
 Since this is a prerelease, it is not published yet on conda and pip,
 to install this version, yuo can use one of the methods described below:
@@ -23,22 +23,26 @@ OR
 
     2) from source: https://github.com/andreatramacere/jetset/wiki/install-release-from-source
 
-### Instructions to run the notebooks
+### Instructions to run the notebooks 
 
 
 The directory `expansion_tools` hosts some helper modules (no need to install), you just need to have this directory in the same directory where you run the notebooks
 
-All the  notebooks with simulations, display the results of the simulations, but you have to rerun  these notebook, to be able to perform the analysis in the other notebooks.
-To rerun the simulations (hosted in the notebooks with the `*_sim*` string, i.e. the one in items 1,2, and 3), yuo have to set `run=True` in cells of the notebook where this variable is defined. You will find a corresponding description in each cell of  the simulation notebooks. Please, notice that products generated in 1 (`Flare_sim.ipynb`) are necessary to run 2  (`Expansion_sim_exp_vs_no_exp.ipynb`)  and 3(`Expansion_sim_exp_vs_no_exp.ipynb`).
+All the notebooks with simulations, display the results of the simulations, but you have to rerun  these notebook, to be able to perform the analysis in the other notebooks.
+To rerun the simulations (hosted in the notebooks with the `*_sim*` string, i.e. the one in items 1,2, and 3), yuo have to set `run=True` in cells of the notebook where this variable is defined. You will find a corresponding description in each cell of  the simulation notebooks. Please, notice that products generated in 2 (`Flare_sim.ipynb`) are necessary to run 3  (`Expansion_sim_exp_vs_no_exp.ipynb`), 4 (`Expansion_sim.ipynb`) and 
+5 (`Expansion_sim_no_radiative_cooling.ipynb`)
 
 List of the notebooks, and description:
 
-1) `Flare_sim.ipynb` This notebook is in charge to run the simulation for the flaring event, Section 3.2 and Figure 2
+1) `time_scales.ipynb` This notebook is in charge to reproduce the analysis in Figure 2, Section 2
 
-2) `Expansion_sim_exp_vs_no_exp.ipynb` This notebook is in charge to run the simulations for the comparison of expansion vs non-expansion, Section 4 and Figure 3 and Figure 4
+2) `Flare_sim.ipynb` This notebook is in charge to run the simulation for the flaring event, Section 3.2 and Figure 3
 
-3) `Expansion_sim.ipynb` This notebook is in charge to run the simulations for
-the long-term adiabatic expansions used in Section 5
+3) `Expansion_sim_exp_vs_no_exp.ipynb` This notebook is in charge to run the simulations for the comparison of expansion vs non-expansion, Section 4 and Figure 4 and Figure 5
+
+4) `Expansion_sim.ipynb` This notebook is in charge to run the simulations with radiative+adiabatic cooling, necessary for the analysis in Section 5
+
+5) `Expansion_sim_no_radiative_cooling.ipynb` This notebook is in charge to run the simulations with only adiabatic cooling, necessary for the analysis in Section 5
 
 4) `Rad_Adb_cooling.ipynb` This notebook is in charge to reproduce the anlysis regarding radiative/adiabatic cooling competition, in Section 5, Figure 5 and Figure 6
 
