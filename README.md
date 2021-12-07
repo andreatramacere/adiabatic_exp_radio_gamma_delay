@@ -2,13 +2,14 @@
 
 This repository contains the notebooks reproduce the analysis published in the paper "Radio-γ-ray response in blazars as signature of adiabatic blob expansion"
 
-The notebooks and the code in the folder: `jetset_sim_and_analysis` reproduce the analysis presented  in Section 2,3,4,5,7, and Appendix C.
-
-The notebooks and the code in the folder: `radio_gev_data_and_analysis` reproduce  the analysis presented in Section 6.
-
 
 # Instructions to run the notebooks in the `jetset_sim_and_analysis`
-The version of jetset is 1.2.0rc11:
+
+The notebooks and the code in the folder: `jetset_sim_and_analysis` reproduce the analysis presented in Section 2,3,4,5,7, and Appendix C.
+
+For questions or support, please contact andrea.tramacere[at]gmail.com
+
+The version of jetset to use is 1.2.0rc11:
 https://github.com/andreatramacere/jetset/releases/tag/1.2.0rc11
 
 Since this is a pre-release, it is not published yet on conda and pip,
@@ -25,17 +26,18 @@ OR
 
 For some notebooks you will need to install the uncertainties  package: http://pythonhosted.org/uncertainties/
 
-### Instructions to run the notebooks 
+## Instructions to run the notebooks 
 
 
 The directory `expansion_tools` hosts some helper modules (no need to install), you just need to have this directory in the same directory where you run the notebooks
 
-All the notebooks with simulations, display the results of the simulations, but you have to rerun these notebooks, to be able to perform the analysis in the other notebooks.
-To rerun the simulations (hosted in the notebooks with the `*_sim*` string, i.e. the one in items 1,2, and 3), you have to set `run=True` in cells of the notebook where this variable is defined. You will find a corresponding description in each cell of the simulation notebooks. Please, notice that products generated in 2 (`Flare_sim.ipynb`) are necessary to run 3  (`Expansion_sim_exp_vs_no_exp.ipynb`), 4 (`Expansion_sim.ipynb`) and 5 (`Expansion_sim_no_radiative_cooling.ipynb`)
+All the notebooks with simulations, already display the results of the simulations, but you have to rerun these notebooks, to be able to perform the analysis in the other notebooks.
+To rerun the simulations (hosted in the notebooks with the `*_sim*` string, i.e. the one in items 1,2,3,4, and 5), you have to set `run=True` in cells of the notebook where this variable is defined. You will find a corresponding description in each cell of the simulation notebooks. Please, notice that products generated in 2 (`Flare_sim.ipynb`) are necessary to run 3  (`Expansion_sim_exp_vs_no_exp.ipynb`), 4 (`Expansion_sim.ipynb`) and 5 (`Expansion_sim_no_radiative_cooling.ipynb`).
+Products generated in 6,7,8, and 9, are necessary to run the analysis in 10,11,12,13, and 14.
 
 It is important to run the notebooks following the sequence as reported below.
 
-For questions or support, please contact andrea.tramacere[at]gmail.com
+
 
 List of the notebooks, and description:
 
@@ -57,7 +59,7 @@ and Section 5.3
 8) `Convolution_analysis_beta_exp_trends_no_radiative_cooling.ipynb` Notebook to run the convolution analysis for the long-term simulations without radiative cooling and beta_exp ranging in [0.001,0.3], necessary for the analysis in Section 5.1
 
 9) `Convolution_analysis_beta_exp_trends.ipynb` Notebook to run the convolution analysis for the long-term simulations with both radiative and adiabatic cooling and beta_exp ranging in [0.001,0.3], necessary for the analysis in Section 5.1 and 
-For questions or support, please contact andrea.tramacere-at-gmail.comSection 5.2, and to produce Figure 6
+ 5.2, and to produce Figure 6
 
 
 10) `Phenomenology_trends_validation.ipynb` Notebook to run the validation of the phenomenological trends Section 5.1 of the paper Figure 7 
@@ -76,7 +78,9 @@ For questions or support, please contact andrea.tramacere-at-gmail.comSection 5.
 
 # Instructions to run the notebooks in the `radio_gev_data_and_analysis`
 
-The directory `radio_gev_data_and_analysis` hosts notebooks to analyse data (available in the `radio_gev_data_and_analysis/data` directory). If you want to rerun the analysis to obtain all the values from the manuscript, just "Run All" cells of the provided notebooks. Generated plots are put into `radio_gev_data_and_analysis/images` folder (for question regarding these notebooks please contact vitalii.sliusar [at] unige.ch)
+The notebooks and the code in the folder: `radio_gev_data_and_analysis` reproduce  the analysis presented in Section 6.  For question regarding the following notebooks please contact vitalii.sliusar [at] unige.ch
+
+The directory `radio_gev_data_and_analysis` hosts notebooks to analyse data (available in the `radio_gev_data_and_analysis/data` directory). If you want to rerun the analysis to obtain all the values from the manuscript, just "Run All" cells of the provided notebooks. Generated plots are put into `radio_gev_data_and_analysis/images` folder
 
 List of the notebooks, and description:
 
