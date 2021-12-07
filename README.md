@@ -1,20 +1,20 @@
 
 
-This repository contains the notebooksto reproduce the analysis published in the paper "Radio-γ-ray response in blazars as signature of adiabatic blob expansion"
+This repository contains the notebooks reproduce the analysis published in the paper "Radio-γ-ray response in blazars as signature of adiabatic blob expansion"
 
 The notebooks and the code in the folder: `jetset_sim_and_analysis` reproduce the analysis presented  in Section 2,3,4,5,7, and Appendix C.
 
 The notebooks and the code in the folder: `radio_gev_data_and_analysis` reproduce  the analysis presented in Section 6.
 
 
-## Instructions to run the notebooks in the `jetset_sim_and_analysis`
+# Instructions to run the notebooks in the `jetset_sim_and_analysis`
 The version of jetset is 1.2.0rc11:
 https://github.com/andreatramacere/jetset/releases/tag/1.2.0rc11
 
 Since this is a pre-release, it is not published yet on conda and pip,
 to install this version, you can use one of the methods described below:
 
-- use the install script in : https://github.com/andreatramacere/jetset-installer
+- use the installation script in : https://github.com/andreatramacere/jetset-installer
 
 OR
 
@@ -35,7 +35,7 @@ To rerun the simulations (hosted in the notebooks with the `*_sim*` string, i.e.
 
 It is important to run the notebooks following the sequence as reported below.
 
-For questions or support, please contact andrea.tramacere-at-gmail.com
+For questions or support, please contact andrea.tramacere[at]gmail.com
 
 List of the notebooks, and description:
 
@@ -74,9 +74,9 @@ For questions or support, please contact andrea.tramacere-at-gmail.comSection 5.
 
 16) `BlobExpGeom.ipynb` Notebook to run the analysis for jet profile in the Section 7 of the paper, Fig. 20
 
-## Instructions to run the notebooks in the `radio_gev_data_and_analysis`
+# Instructions to run the notebooks in the `radio_gev_data_and_analysis`
 
-The directory `radio_gev_data_and_analysis` hosts notebooks to analyse data (available in the `radio_gev_data_and_analysis/data` directory). If you want to rerun the analysis to obtain all the values from the manuscript, just "Run All" cells of the provided notebooks. Generated plots are put into `radio_gev_data_and_analysis/images` folder.
+The directory `radio_gev_data_and_analysis` hosts notebooks to analyse data (available in the `radio_gev_data_and_analysis/data` directory). If you want to rerun the analysis to obtain all the values from the manuscript, just "Run All" cells of the provided notebooks. Generated plots are put into `radio_gev_data_and_analysis/images` folder (for question regarding these notebooks please contact vitalii.sliusar [at] unige.ch)
 
 List of the notebooks, and description:
 
