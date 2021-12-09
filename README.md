@@ -1,7 +1,7 @@
 
 
 This repository contains the notebooks reproduce the analysis published in the paper "Radio-γ-ray response in blazars as signature of adiabatic blob expansion"
-
+https://arxiv.org/pdf/2112.03941.pdf
 
 # Instructions to run the notebooks in the `jetset_sim_and_analysis`
 
@@ -58,8 +58,7 @@ and Section 5.3
 
 8) `Convolution_analysis_beta_exp_trends_no_radiative_cooling.ipynb` Notebook to run the convolution analysis for the long-term simulations without radiative cooling and beta_exp ranging in [0.001,0.3], necessary for the analysis in Section 5.1
 
-9) `Convolution_analysis_beta_exp_trends.ipynb` Notebook to run the convolution analysis for the long-term simulations with both radiative and adiabatic cooling and beta_exp ranging in [0.001,0.3], necessary for the analysis in Section 5.1 and 
- 5.2, and to produce Figure 6
+9) `Convolution_analysis_beta_exp_trends.ipynb` Notebook to run the convolution analysis for the long-term simulations with both radiative and adiabatic cooling and beta_exp ranging in [0.001,0.3], necessary for the analysis in Section 5.1 and 5.2, and to produce Figure 6
 
 
 10) `Phenomenology_trends_validation.ipynb` Notebook to run the validation of the phenomenological trends Section 5.1 of the paper Figure 7 
