@@ -9,20 +9,9 @@ The notebooks and the code in the folder: `jetset_sim_and_analysis` reproduce th
 
 For questions or support, please contact andrea.tramacere[at]gmail.com
 
-The version of jetset to use is 1.2.0rc11:
-https://github.com/andreatramacere/jetset/releases/tag/1.2.0rc11
+**These scripts are updated to work with JetSeT v1.2.1** 
+https://jetset.readthedocs.io/en/1.2.1.post2
 
-Since this is a pre-release, it is not published yet on conda and pip,
-to install this version, you can use one of the methods described below:
-
-- use the installation script in : https://github.com/andreatramacere/jetset-installer
-
-OR
-
-- install from source or binaries:
-    1) from binaries: https://github.com/andreatramacere/jetset/wiki/install-release-from-binaries
-
-    2) from source: https://github.com/andreatramacere/jetset/wiki/install-release-from-source
 
 For some notebooks you will need to install the uncertainties  package: http://pythonhosted.org/uncertainties/
 
