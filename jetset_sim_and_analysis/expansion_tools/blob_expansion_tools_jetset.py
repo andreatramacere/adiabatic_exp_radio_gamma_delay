@@ -4,6 +4,7 @@ import pylab as plt
 from jetset.jet_timedep import JetTimeEvol
 import pickle
 import warnings
+import jetset
 warnings.filterwarnings('ignore')
 
 
@@ -172,7 +173,10 @@ def do_analysistemp_ev(temp_ev,
             y = fit_model.jet_leptonic.emitters_distribution.n_gamma_e
             p.ax.plot(x, y, c='g', label='best fit model')
         #p.ax.plot(temp_ev_acc_flare.time_sampled_emitters.gamma,temp_ev_acc_flare.time_sampled_emitters.n_gamma_rad[55],c='orange',label='best fit model',ms=2)
-        p.rescale(x_max=1E7, x_min=1, y_min=1E-18, y_max=100)
+        if jetset.__version__<'1.2.1':
+            p.rescale(x_max=1E7, x_min=1, y_min=1E-18, y_max=100)
+        else:
+            p.setlim(x_max=1E7, x_min=1, y_min=1E-18, y_max=100)
 
         if cache_SEDs_acc is True:
             p = temp_ev.plot_tempev_emitters(
@@ -183,7 +187,10 @@ def do_analysistemp_ev(temp_ev,
                 x = fit_model.jet_leptonic.emitters_distribution.gamma_e
                 y = fit_model.jet_leptonic.emitters_distribution.n_gamma_e*50
                 p.ax.plot(x, y, c='g', label='best fit model')
-            p.rescale(x_max=1E7, x_min=1, y_min=1E-18, y_max=100)
+            if jetset.__version__<'1.2.1':
+                p.rescale(x_max=1E7, x_min=1, y_min=1E-18, y_max=100)
+            else:
+                p.setlim(x_max=1E7, x_min=1, y_min=1E-18, y_max=100)
 
     if plot_seds is True:
         if cache_SEDs_rad is True:
@@ -193,7 +200,10 @@ def do_analysistemp_ev(temp_ev,
                 fit_model.eval()
                 fit_model.jet_leptonic.plot_model(
                     plot_obj=p, sed_data=sed_data)
-            p.rescale(y_min=-18, x_min=7)
+            if jetset.__version__<'1.2.1':
+                p.rescale(y_min=-18, x_min=7)
+            else:
+                p.setlim(y_min=1E-18, x_min=1E7)
 
         if cache_SEDs_acc is True:
             p = temp_ev.plot_tempev_model(
@@ -202,7 +212,10 @@ def do_analysistemp_ev(temp_ev,
                 fit_model.eval()
                 fit_model.jet_leptonic.plot_model(
                     plot_obj=p, sed_data=sed_data)
-            p.rescale(y_min=-18, x_min=7)
+            if jetset.__version__<'1.2.1':
+                p.rescale(y_min=-18, x_min=7)
+            else:
+                p.setlim(y_min=1E-18, x_min=1E7)
 
     lcs_dict = {}
     if cache_SEDs_rad is True:
