@@ -9,7 +9,7 @@ The notebooks and the code in the folder: `jetset_sim_and_analysis` reproduce th
 
 For questions or support, please contact andrea.tramacere[at]gmail.com
 
-**These scripts are updated to work with JetSeT v>1.2.1** 
+**These scripts are updated to work with JetSeT v>=1.2.1** 
 https://jetset.readthedocs.io/en/1.2.2/
 
 
